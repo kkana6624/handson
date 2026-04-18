@@ -18,12 +18,56 @@ Gleam v1.x (v1.15対応)。Erlang VM (BEAM) および JavaScript ランタイム
 | 08 | モジュールとインポート | `src/ch08_modules.gleam` |
 | 09 | ジェネリクス | `src/ch09_generics.gleam` |
 | 10 | 総合演習 – FizzBuzz & 簡易スタック | `src/ch10_exercises.gleam` |
+| 11 | Webサーバー (Mist) | `src/ch11_mist.gleam` |
 
 ---
 
 ## セットアップ
 
+### Gleam 本体のインストール (mise を使用)
+
+Gleam と実行環境となる Erlang/OTP を、マルチランタイムマネージャーの [mise](https://mise.jdx.dev/) を使ってインストールするのが推奨です。
+
+#### 1. mise の導入
+
+まだ `mise` がインストールされていない場合は、以下のコマンドでインストールできます。
+
 ```bash
+# curl を使用したインストール
+curl https://mise.run | sh
+
+# macOS の場合は Homebrew でも可能です
+# brew install mise
+```
+
+インストール後、シェルの設定ファイル（`.zshrc` や `.bashrc`）の末尾に `eval "$(mise activate zsh)"` などのアクティベート設定を追記し、設定を反映させてください。
+
+```bash
+# zsh の場合
+echo 'eval "$(mise activate zsh)"' >> ~/.zshrc
+source ~/.zshrc
+
+# bash の場合
+echo 'eval "$(mise activate bash)"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+これで `mise` コマンドが使用可能になります。
+
+#### 2. Erlang と Gleam のインストール
+
+```bash
+# Erlang と Gleam の最新版をインストールしてグローバルで有効化
+mise use --global erlang@latest gleam@latest
+
+# インストールの確認
+gleam --version
+```
+
+> [!TIP]
+> プロジェクトごとにバージョンを固定したい場合は、プロジェクトルートで `mise use erlang@latest gleam@latest` （`--global` なし）を実行すると、`.mise.toml` が作成され管理が容易になります。
+
+### プロジェクトのセットアップ
 # 依存パッケージのダウンロード
 cd /path/to/gleam/handson
 gleam deps download
@@ -33,6 +77,15 @@ gleam run
 
 # テスト
 gleam test
+```
+
+### Webアプリ開発（Mist）のセットアップ
+
+Webサーバーを作成する場合は、以下のライブラリを追加します。
+
+```bash
+# 依存ライブラリの追加
+gleam add mist gleam_http gleam_erlang
 ```
 
 ---
@@ -122,6 +175,16 @@ Gleam の型システムと基本構文の基礎を学びます。
 - **FizzBuzz の実装:** `case` 条件分岐と `list` モジュールの反復適用
 - **簡易スタック機能:** ジェネリック構造体と `push` / `pop` メソッド群の作成
 - (Optional) `Result` 型で `pop` 時のエラーを返す安全設計の導入
+
+### Chapter 11 – Webサーバー (Mist)
+
+Gleam の代表的な HTTP サーバーである Mist を使った Web アプリケーションの構築を練習します。
+
+- Mist の基本セットアップ (`gleam add mist`)
+- `mist.run_service` による HTTP サーバーの起動
+- `Request` オブジェクトからの情報取得（パス、クエリなど）
+- `Response` オブジェクトの構築と返却
+- `use` 式を組み合わせたミドルウェア的なハンドリングの基本
 
 ---
 

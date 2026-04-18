@@ -17,6 +17,7 @@ import ch07_error_handling
 import ch08_modules
 import ch09_generics
 import ch10_exercises
+import ch11_mist
 
 pub fn main() -> Nil {
   io.println("╔══════════════════════════════════════╗")
@@ -35,6 +36,7 @@ pub fn main() -> Nil {
   ch08_modules.run()
   ch09_generics.run()
   ch10_exercises.run()
+  // ch11_mist.run() // サーバーが起動し続けるため、デフォルトではコメントアウト
 
   io.println("=== 全チャプター完了! ===")
 }
